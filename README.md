@@ -2,9 +2,11 @@
 
 Very simple provisioning of a machine running [CoreOS](http://coreos.com/) with a [Hello World Docker Container](https://registry.hub.docker.com/u/google/nodejs-hello/).
 
+**WARNING: this will cost you money. Remember to remove this machine after you complete the exercise!**
+
 ## Running
 
-You will require a `TOKEN` environment variable with a Digital Ocean [Personal Access Token](https://cloud.digitalocean.com/settings/applications).
+You will require a `TOKEN` environment variable with a Digital Ocean [Personal Access Token](https://cloud.digitalocean.com/settings/applications):
 
 And a `SSH_KEY_ID` the a valid ID to a SSH key of yours.
 
@@ -15,7 +17,14 @@ curl --request GET "https://api.digitalocean.com/v2/account/keys" \
      --header "Authorization: Bearer $TOKEN"
 ```
 
-And then, to provision a machine (this will cost you money):
+Export these environment variables:
+
+```bash
+export TOKEN=<digital ocean personal token>
+export SSH_KEY_ID=<id>
+```
+
+And then, provision a machine:
 
 ```bash
 ./provision.sh
