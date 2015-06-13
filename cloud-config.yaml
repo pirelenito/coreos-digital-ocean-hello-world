@@ -1,0 +1,24 @@
+#cloud-config
+
+coreos:
+  units:
+    - name: hello-world.service
+      command: start
+      content: |
+        [Unit]
+        After=docker.service
+        Requires=docker.service
+        [Service]
+        KillMode=none
+        TimeoutStartSec=0
+        User=core
+        Restart=always
+        RestartSec=10s
+        ExecStartPre=-/usr/bin/docker kill hello-world
+        ExecStartPre=-/usr/bin/docker rm hello-world
+        ExecStartPre=/usr/bin/docker pull google/nodejs-hello:latest
+        ExecStart=/usr/bin/docker run --rm --name hello-world -p 80:8080 google/nodejs-hello:latest
+        ExecStop=/usr/bin/docker kill hello-world
+        ExecStopPost=/usr/bin/docker rm hello-world
+        [Install]
+        WantedBy=multi-user.target
